@@ -10,23 +10,35 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies/Random
-        public ActionResult Random()
+        //GET: Movies/Index
+        public ActionResult Index()
         {
-            var movie = new Movie() { Id = 1, Name = "Sairat" };
-            var customers = new List<Customer>() 
+            var movies = GetMovies().ToList();
+
+            return View(movies);
+        }
+
+        //GET: Movies/Details/Id
+        public ActionResult Details(int id)
+        {
+            var movie = GetMovies().FirstOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
+        }
+
+        private IEnumerable<Movie> GetMovies()
+        {
+            var movies = new List<Movie>()
             {
-                new Customer { Id=1, Name = "Vijay Babar" },
-                new Customer { Id=2, Name = "Ajit Phadtare" }
+                new Movie { Id=1, Name="Sairat" },
+                new Movie { Id=2, Name="Baban" },
+                new Movie { Id=3, Name="Babu Band Baja" }
             };
 
-            var viewModel = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(viewModel);
+            return movies;
         }
     }
 }
