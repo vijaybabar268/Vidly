@@ -40,6 +40,78 @@ namespace Vidly.Controllers
                 return HttpNotFound();
 
             return View(movie);
-        }                
+        }    
+        
+        //GET: Movies/New
+        public ActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+
+            var viewModel = new MovieFormViewModel()
+            {
+                Title = "New Movie",
+                Movie = new Movie(),
+                Genres = genres
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        //POST: Movies/Save
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.First(m => m.Id == movie.Id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Movies");
+
+        }
+
+        //GET: Movies/Edit/Id
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            var viewModel = new MovieFormViewModel()
+            {
+                Title = "Edit Movie",
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        //POST: Movies/Delete
+        [HttpPost]
+        public ActionResult Delete(int[] movie_id)
+        {
+            if (movie_id != null && movie_id.Length > 0)
+            {
+                var selectedMovies = _context.Movies.Where(m => movie_id.Contains(m.Id));
+                _context.Movies.RemoveRange(selectedMovies);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Movies");
+        }
     }
 }

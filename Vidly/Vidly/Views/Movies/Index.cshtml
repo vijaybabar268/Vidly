@@ -7,27 +7,42 @@
 
 <h2>Movies</h2>
 
+@Html.ActionLink("New Movie", "New", "Movies", null, new { @class = "btn btn-primary mb2" })
+
 @if (!Model.Any())
 {
     <p>We don't have any movies yet.</p>
 }
 else
 {
-    <table class="table table-hover table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>Movie</th>
-                <th>Genre</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var movie in Model)
-            {
+    using (Html.BeginForm("Delete", "Movies", FormMethod.Post, new { onSubmit = "return confirm('Are you sure you want to perform these action?')" }))
+    {
+        <table class="table table-hover table-bordered table-responsive table-condensed table-striped">
+            <thead>
                 <tr>
-                    <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
-                    <td>@movie.Genre.Name</td>
+                    <th>Movie</th>
+                    <th>Genre</th>
+                    <th>Action</th>
+                    <th>Select</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var movie in Model)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
+                        <td>@movie.Genre.Name</td>
+                        <td>@Html.ActionLink("Edit", "Edit", new { id = movie.Id }, new { @class = "btn-link" })</td>
+                        <td>
+                            <input type="checkbox" name="movie_id" value="@movie.Id" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+    }
+
+
 }
