@@ -7,27 +7,42 @@
 
 <h2>Customers</h2>
 
+@Html.ActionLink("New Customer", "New", "Customers", null, new { @class = "btn btn-primary mb2" })
+
 @if (Model.Count() == 0)
 {
     <p>We don't have any customer yet.</p>
 }
 else
 {
-    <table class="table table-bordered table-hover table-striped table-responsive">
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Membership Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
+    using (Html.BeginForm("Delete", "Customers", FormMethod.Post, new { onSubmit = "return confirm('Are you sure you want to perform these action?')" }))
+    {
+        <table class="table table-bordered table-hover table-striped table-responsive table-condensed">
+            <thead>
                 <tr>
-                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
-                    <td>@customer.MembershipType.Name</td>
+                    <th>Customer</th>
+                    <th>Membership Type</th>
+                    <th>Action</th>
+                    <th>Select</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
+                        <td>@customer.MembershipType.Name</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Customers", new { id = customer.Id }, new { @class = "btn-link" })
+                        </td>
+                        <td>
+                            <input type="checkbox" name="customer_id" value="@customer.Id" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+    }
 }
