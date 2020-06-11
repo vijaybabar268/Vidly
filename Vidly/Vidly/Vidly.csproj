@@ -215,6 +215,10 @@
     <Compile Include="Migrations\202006071709283_AddedGenre.Designer.cs">
       <DependentUpon>202006071709283_AddedGenre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006111746253_OverrideDataAnnotationsMovie.cs" />
+    <Compile Include="Migrations\202006111746253_OverrideDataAnnotationsMovie.Designer.cs">
+      <DependentUpon>202006111746253_OverrideDataAnnotationsMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -344,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006071709283_AddedGenre.resx">
       <DependentUpon>202006071709283_AddedGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006111746253_OverrideDataAnnotationsMovie.resx">
+      <DependentUpon>202006111746253_OverrideDataAnnotationsMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
