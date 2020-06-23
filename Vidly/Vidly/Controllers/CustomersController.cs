@@ -8,7 +8,7 @@ using System.Data.Entity;
 using Vidly.ViewModels;
 
 namespace Vidly.Controllers
-{
+{    
     public class CustomersController : Controller
     {
         private ApplicationDbContext _context;
@@ -23,7 +23,7 @@ namespace Vidly.Controllers
             _context.Dispose();
         }
 
-        // GET: Customers/Index
+        // GET: Customers/Index        
         public ActionResult Index()
         {
             return View();
