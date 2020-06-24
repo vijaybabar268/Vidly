@@ -37,7 +37,8 @@ textarea {
     border: 2px solid red;
 }
 
-.field-validation-error {
+.field-validation-error,
+label.error{
     color: red;
 }
 
